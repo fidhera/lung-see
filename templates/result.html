@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="bg-[#F7F8FA] min-h-screen py-16 pt-32">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    {% if status_validasi == 'AMBIGU' and pesan_warning %}
+    <div class="mb-10 bg-amber-50 border border-amber-200 text-amber-800 rounded-3xl p-6 shadow-sm flex items-start gap-4 animate-fade-in">
+      <div class="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0 text-xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div class="space-y-1">
+        <h4 class="font-bold text-lg text-amber-900">Peringatan Evaluasi AI (Tingkat Keyakinan Rendah)</h4>
+        <p class="text-sm leading-relaxed text-amber-700">{{ pesan_warning }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="text-center mb-12">
+      <span class="inline-flex items-center px-4 py-2 rounded-full bg-green-50 border border-green-200 text-green-600 text-sm font-medium">
+        Hasil Analisis AI
+      </span>
+
+      <h1 class="text-5xl font-bold text-slate-900 mt-6">
+        Laporan Diagnosa
+        <span class="bg-gradient-to-r from-violet-500 to-indigo-500 text-white px-5 py-1 rounded-full">
+          Paru-Paru
+        </span>
+      </h1>
+
+      <p class="text-slate-500 max-w-2xl mx-auto mt-5">
+        Sistem kecerdasan buatan telah menyelesaikan rekayasa fitur spasial menggunakan ekstraksi ROI lokalisasi citra radiografi dada.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-5 mb-10">
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <p class="text-sm text-slate-500 mb-2">Hasil Diagnosis</p>
+        {% if prediction == 'NORMAL' %}
+        <h2 class="text-3xl font-bold text-green-600">Normal</h2>
+        <p class="text-sm text-slate-500 mt-2">Tidak ditemukan indikasi kerusakan patologi paru.</p>
+        {% else %}
+        <h2 class="text-3xl font-bold text-red-500">{{ prediction }}</h2>
+        <p class="text-sm text-slate-500 mt-2">Terdeteksi anomali tekstur matriks visual pada organ paru.</p>
+        {% endif %}
+      </div>
+
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <p class="text-sm text-slate-500 mb-2">Confidence Score</p>
+        <h2 class="text-3xl font-bold text-violet-600">{{ confidence }}</h2>
+        <p class="text-sm text-slate-500 mt-2">Tingkat kepastian matematis model terhadap kelas.</p>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <p class="text-sm text-slate-500 mb-2">Explainable AI (XAI)</p>
+        <h2 class="text-3xl font-bold text-indigo-600">Masked Grad-CAM</h2>
+        <p class="text-sm text-slate-500 mt-2">Peta gradien atensi yang terisolasi di dalam organ paru.</p>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 mb-10">
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <div class="mb-5">
+          <h3 class="font-semibold text-lg text-slate-900">Citra Rontgen Input</h3>
+          <p class="text-sm text-slate-500 mt-1">Berkas radiografi dada asli yang dievaluasi sistem.</p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center min-h-[400px]">
+          <img
+            src="{{ url_for('static', filename=original_img) }}"
+            alt="Original X-Ray"
+            class="rounded-xl object-contain max-h-[450px] shadow-sm"
+          />
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <div class="mb-5">
+          <h3 class="font-semibold text-lg text-slate-900">Visualisasi Aktivasi Grad-CAM</h3>
+          <p class="text-sm text-slate-500 mt-1">Lokasi anomali anatomi yang memengaruhi prediksi model.</p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center min-h-[400px]">
+          <img
+            src="{{ url_for('static', filename=gradcam_img) }}"
+            alt="Grad-CAM"
+            class="rounded-xl object-contain max-h-[450px] shadow-sm"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200 p-8 mb-10 shadow-sm">
+      <h3 class="text-xl font-semibold text-slate-900 mb-6 flex items-center gap-2">
+        <i class="fa-solid fa-file-medical-chart text-violet-500"></i> Interpretasi & Rekomendasi Klinis
+      </h3>
+
+      <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+          <h4 class="font-semibold text-slate-900 mb-2 flex items-center gap-2 text-base">
+            <i class="fa-solid fa-brain text-indigo-500"></i> Catatan Deskripsi Komputasi AI:
+          </h4>
+          <p>{{ deskripsi }}</p>
+        </div>
+
+        <div class="bg-red-50/50 p-6 rounded-2xl border border-red-100 mt-4">
+          <h4 class="font-semibold text-red-900 mb-2 flex items-center gap-2 text-base">
+            <i class="fa-solid fa-shield-halved text-red-500"></i> Batasan Hukum & Batasan Sistem Medis:
+          </h4>
+          <p class="text-red-800 text-sm">{{ disclaimer }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-4">
+      <a
+        href="{{ url_for('diagnosa') }}"
+        class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-semibold shadow-lg hover:scale-105 transition"
+      >
+        <i class="fa-solid fa-rotate-right text-sm"></i> Diagnosa Ulang
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,641 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="scroll-smooth">
+  <header
+    class="fixed top-0 left-0 right-0 z-50 p-6 transition-all duration-300"
+  >
+    <nav
+      class="max-w-7xl mx-auto bg-white/90 backdrop-blur-md rounded-full border border-gray-200 px-8 py-4 flex items-center justify-between shadow-md"
+    >
+      <div class="flex items-center gap-2">
+        <img
+          src="{{ url_for('static', filename='img/logo/logo-gisee.png') }}"
+          alt="LungSee Logo"
+          class="w-20"
+        />
+      </div>
+
+      <div class="hidden md:flex gap-10 text-sm font-medium text-slate-600">
+        <a href="#beranda" class="hover:text-violet-600 transition">Beranda</a>
+        <a href="#tentang" class="hover:text-violet-600 transition">Tentang</a>
+        <a href="#edukasi" class="hover:text-violet-600 transition">Edukasi</a>
+        <a href="#fitur" class="hover:text-violet-600 transition">Fitur</a>
+      </div>
+
+      <a
+        href="{{ url_for('diagnosa') }}"
+        class="px-6 py-3 rounded-full bg-violet-600 text-white font-medium hover:bg-violet-700 shadow-sm transition"
+      >
+        Coba Sekarang
+      </a>
+    </nav>
+  </header>
+
+  <section id="beranda" class="bg-[#F7F8FA] overflow-hidden pt-36 pb-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div
+            class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 text-xs font-semibold mb-6"
+          >
+            AI-Powered Lung Diagnostic Assistant
+          </div>
+
+          <h1 class="text-6xl font-bold leading-tight text-slate-900">
+            Periksa Parumu
+          </h1>
+
+          <h1 class="text-6xl font-bold leading-tight text-slate-900 mt-2">
+            Pahami
+            <span
+              class="bg-gradient-to-r from-violet-500 to-indigo-500 text-white px-6 py-1 rounded-full"
+            >
+              Kondisimu
+            </span>
+          </h1>
+
+          <p class="text-slate-500 mt-8 max-w-xl">
+            LungSee mengintegrasikan sistem computer vision murni berbasis
+            pengenalan objek anatomi paru untuk visualisasi diagnosis yang
+            transparan.
+          </p>
+
+          <div class="space-y-4 mt-8">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-circle-check text-violet-500"></i>
+              <span>Auto-Cropping Spasial Wilayah Paru (YOLOv8 ROI)</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-circle-check text-violet-500"></i>
+              <span>Peta Panas Terlokalisasi (Masked Grad-CAM)</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-5 mt-10">
+            <a
+              href="{{ url_for('diagnosa') }}"
+              class="bg-white shadow px-6 py-4 rounded-full font-medium hover:shadow-lg transition"
+            >
+              Coba Analisis Sekarang
+            </a>
+
+            <a
+              href="#fitur"
+              class="text-slate-700 font-medium hover:text-violet-600 transition"
+            >
+              Lihat Cara Kerjanya
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <img
+            src="{{ url_for('static', filename='img/icons/lungs.png') }}"
+            alt="Lungs Illustration"
+            class="max-w-md animate-float"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tentang" class="py-28 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-20 items-center">
+        <div>
+          <p
+            class="text-green-500 text-sm font-medium mb-4"
+          >
+            Tentang LungSee
+          </p>
+
+          <h2 class="text-5xl font-bold text-slate-900 leading-tight mb-8">
+            Mengapa LungSee Berbeda?
+          </h2>
+
+          <p class="text-slate-500 text-lg mb-10 leading-relaxed">
+            Sistem diarahkan menjadi Single-Input Computer Vision murni untuk
+            mengeliminasi redundansi data. Evaluasi keputusan terfokus penuh di
+            dalam wilayah parenkim paru-paru pasien.
+          </p>
+
+          <div class="space-y-5">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-lungs text-green-600"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">YOLOv8 ROI Extraction</h4>
+                <p class="text-sm text-slate-500">
+                  Isolasi otomatis wilayah anatomi dada untuk membuang noise
+                  background.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-virus text-violet-600"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">3-Class Disease Prediction</h4>
+                <p class="text-sm text-slate-500">
+                  Klasifikasi optimal untuk kondisi Normal, Pneumonia, dan
+                  Tuberkulosis (TBC).
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-eye text-orange-600"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">Masked Explainable AI</h4>
+                <p class="text-sm text-slate-500">
+                  Visualisasi Grad-CAM tajam yang terkunci rapat di dalam organ
+                  paru-paru.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div
+            class="absolute -top-8 -right-8 w-72 h-72 bg-violet-200 rounded-full blur-3xl opacity-30"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-56 h-56 bg-green-200 rounded-full blur-3xl opacity-20"
+          ></div>
+
+          <div
+            class="relative bg-white border border-slate-200 rounded-3xl shadow-2xl p-8"
+          >
+            <div class="flex justify-between items-center mb-8">
+              <div>
+                <h3 class="font-bold text-lg">AI Diagnostic Dashboard</h3>
+                <p class="text-sm text-slate-500">Explainable AI Analysis</p>
+              </div>
+              <div
+                class="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-brain text-violet-600 text-xl"></i>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-5 mb-6">
+              <div class="flex justify-between items-center mb-4">
+                <span class="font-medium">Chest X-Ray (YOLOv8 ROI)</span>
+                <span class="text-green-500 text-sm font-semibold"
+                  >Analyzed</span
+                >
+              </div>
+              <div
+                class="h-52 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center"
+              >
+                <i
+                  class="fa-solid fa-lungs text-7xl text-slate-400 animate-pulse"
+                ></i>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="bg-violet-50 rounded-2xl p-5">
+                <p class="text-sm text-slate-500">Confidence</p>
+                <h4 class="text-3xl font-bold text-violet-600">90%</h4>
+              </div>
+              <div class="bg-green-50 rounded-2xl p-5">
+                <p class="text-sm text-slate-500">Val Accuracy</p>
+                <h4 class="text-3xl font-bold text-green-600">Stable</h4>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div
+                class="flex justify-between items-center p-4 rounded-xl bg-slate-50"
+              >
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-bacteria text-orange-500"></i>
+                  <span>Tuberculosis (TBC)</span>
+                </div>
+                <span class="font-semibold text-orange-500">5%</span>
+              </div>
+
+              <div
+                class="flex justify-between items-center p-4 rounded-xl bg-slate-50"
+              >
+                <div class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-cloud-showers-heavy text-indigo-500"
+                  ></i>
+                  <span>Pneumonia</span>
+                </div>
+                <span class="font-semibold text-indigo-500">12%</span>
+              </div>
+
+              <div
+                class="flex justify-between items-center p-4 rounded-xl bg-green-50 border border-green-100"
+              >
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-circle-check text-green-500"></i>
+                  <span>Normal</span>
+                </div>
+                <span class="font-semibold text-green-600">83%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="edukasi" class="bg-[#F7F8FA] py-28">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-green-500 text-sm font-medium mb-3">Edukasi</p>
+        <h2 class="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+          Semua yang Kamu Butuhkan <br />
+          untuk Hidup Lebih
+          <span class="inline-block bg-green-500 text-white px-8 py-2 rounded-full">
+            Sehat
+          </span>
+        </h2>
+      </div>
+
+      <!-- Grid Kartu Utama (Bisa Di-klik) -->
+      <div class="grid lg:grid-cols-3 gap-8">
+        
+        <!-- Card 1: Pneumonia -->
+        <div onclick="bukaModalEdukasi('modal-pneumonia')" class="bg-white rounded-3xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 cursor-pointer group">
+          <div class="h-52 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/5 transition duration-300"></div>
+            <i class="fa-solid fa-lungs text-6xl text-green-500 group-hover:scale-110 transition duration-300"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="font-semibold text-xl text-slate-900 mb-3 group-hover:text-green-600 transition">
+              Apa itu Pneumonia?
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Pelajari gejala, penyebab infiltrat cairan basal, serta bagaimana AI mengidentifikasi infeksi pneumonia akut sejak dini.
+            </p>
+            <span class="text-xs font-semibold text-green-600 inline-flex items-center gap-1">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Card 2: TBC -->
+        <div onclick="bukaModalEdukasi('modal-tbc')" class="bg-white rounded-3xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 cursor-pointer group">
+          <div class="h-52 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-violet-500/0 group-hover:bg-violet-500/5 transition duration-300"></div>
+            <i class="fa-solid fa-virus text-6xl text-violet-500 group-hover:scale-110 transition duration-300"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="font-semibold text-xl text-slate-900 mb-3 group-hover:text-violet-600 transition">
+              Mengenal Tuberkulosis (TBC)
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Informasi lengkap mengenai perkembangan bakteri di area apex paru serta pentingnya deteksi dini lesi radiologi.
+            </p>
+            <span class="text-xs font-semibold text-violet-600 inline-flex items-center gap-1">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Card 3: Grad-CAM -->
+        <div onclick="bukaModalEdukasi('modal-gradcam')" class="bg-white rounded-3xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 cursor-pointer group">
+          <div class="h-52 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-indigo-500/0 group-hover:bg-indigo-500/5 transition duration-300"></div>
+            <i class="fa-solid fa-microscope text-6xl text-indigo-500 group-hover:scale-110 transition duration-300"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="font-semibold text-xl text-slate-900 mb-3 group-hover:text-indigo-600 transition">
+              Explainable AI (Masked Grad-CAM)
+            </h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Pahami pengisolasian algoritma gradien biner untuk membatasi visualisasi warna agar tepat berada di dalam organ dalam paru.
+            </p>
+            <span class="text-xs font-semibold text-indigo-600 inline-flex items-center gap-1">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- KOMPONEN MODAL OVERLAY DETAIL INFORMASI (FADE ANIMATION) -->
+    <!-- ======================================================================= -->
+
+    <!-- Modal 1: Detail Pneumonia -->
+    <div id="modal-pneumonia" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+      <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl p-8 relative scale-95 transition-transform duration-300">
+        <button onclick="tutupModalEdukasi('modal-pneumonia')" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 text-xl">
+            <i class="fa-solid fa-lungs"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-green-600 uppercase tracking-wide">Informasi Medis</span>
+            <h3 class="font-bold text-2xl text-slate-900">Karakteristik Klinis Pneumonia</h3>
+          </div>
+        </div>
+        <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+          <p>Pneumonia adalah infeksi akut yang menyerang jaringan paru-paru (alveoli), menyebabkan kantung udara terisi oleh cairan atau nanah.</p>
+          <div class="bg-slate-50 p-4 rounded-2xl space-y-3 my-4">
+            <h4 class="font-semibold text-slate-900 flex items-center gap-2 text-base"><i class="fa-solid fa-eye text-green-500"></i> Manifestasi Visual Sinar-X:</h4>
+            <ul class="list-none space-y-2 pl-1">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-green-500 mt-1"></i> <span><strong>Lokasi Basal:</strong> Bercak infiltrat putih umumnya terkumpul di area bawah atau tengah paru akibat pengaruh gravitasi cairan.</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-green-500 mt-1"></i> <span><strong>Konsolidasi Halus:</strong> Penampakan menyerupai kabut tipis awan (Ground-Glass Opacity) yang menyebar di sekitar percabangan bronkus.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2: Detail TBC -->
+    <div id="modal-tbc" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+      <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl p-8 relative scale-95 transition-transform duration-300">
+        <button onclick="tutupModalEdukasi('modal-tbc')" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-600 text-xl">
+            <i class="fa-solid fa-virus"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-violet-600 uppercase tracking-wide">Informasi Medis</span>
+            <h3 class="font-bold text-2xl text-slate-900">Karakteristik Klinis Tuberkulosis (TBC)</h3>
+          </div>
+        </div>
+        <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+          <p>Tuberkulosis adalah penyakit infeksi menular kronis yang disebabkan oleh kontaminasi bakteri <em>Mycobacterium tuberculosis</em> di dalam saluran napas.</p>
+          <div class="bg-slate-50 p-4 rounded-2xl space-y-3 my-4">
+            <h4 class="font-semibold text-slate-900 flex items-center gap-2 text-base"><i class="fa-solid fa-eye text-violet-500"></i> Manifestasi Visual Sinar-X:</h4>
+            <ul class="list-none space-y-2 pl-1">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-violet-500 mt-1"></i> <span><strong>Lokasi Apeks:</strong> Bakteri bersifat aerob murni (sangat menyukai oksigen), sehingga lesi gumpalan putih terkunci di area puncak paru atas di bawah tulang selangka.</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-violet-500 mt-1"></i> <span><strong>Kerusakan Struktural:</strong> Sering membentuk pola kavitas (lubang jaringan) atau fibrosis pengapuran bercak kasar yang terisolasi.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3: Detail Grad-CAM -->
+    <div id="modal-gradcam" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+      <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl p-8 relative scale-95 transition-transform duration-300">
+        <button onclick="tutupModalEdukasi('modal-gradcam')" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl">
+            <i class="fa-solid fa-microscope"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Teknologi AI</span>
+            <h3 class="font-bold text-2xl text-slate-900">Mekanisme Kerja Masked Grad-CAM</h3>
+          </div>
+        </div>
+        <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+          <p>Grad-CAM (Gradient-weighted Class Activation Mapping) adalah bagian dari <em>Explainable AI</em> (XAI) untuk memvisualisasikan area piksel mana yang paling mempengaruhi keputusan klasifikasi jaringan saraf tiruan.</p>
+          <div class="bg-slate-50 p-4 rounded-2xl space-y-3 my-4">
+            <h4 class="font-semibold text-slate-900 flex items-center gap-2 text-base"><i class="fa-solid fa-code text-indigo-500"></i> Keunggulan Teknis:</h4>
+            <ul class="list-none space-y-2 pl-1">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-indigo-500 mt-1"></i> <span><strong>Masking Thresholding:</strong> Algoritma matematika memotong pixel background gelap di luar paru, memaksa nilai panas di luar organ menjadi nol.</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-chevron-right text-xs text-indigo-500 mt-1"></i> <span><strong>Transparansi Diagnosis:</strong> Menghilangkan keraguan penguji medis dengan membuktikan bahwa AI fokus memindai lesi paru, bukan organ perut atau bahu.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- Script Ringan Pengendali Modal Pop-Up (Smooth Fade In/Out Effect) -->
+  <script>
+    function bukaModalEdukasi(idModal) {
+      const modal = document.getElementById(idModal);
+      const konten = modal.querySelector('div');
+      
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      // Memicu animasi smooth fade-in dan zoom-in tipis via thread render
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        konten.classList.remove('scale-95');
+      }, 20);
+    }
+
+    function tutupModalEdukasi(idModal) {
+      const modal = document.getElementById(idModal);
+      const konten = modal.querySelector('div');
+      
+      modal.classList.add('opacity-0');
+      konten.classList.add('scale-95');
+      
+      // Sembunyikan elemen secara permanen setelah durasi transisi css berakhir
+      setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }, 300);
+    }
+  </script>
+
+  <section id="fitur" class="bg-white py-28">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-28 items-center">
+        <div>
+          <p class="text-green-500 text-sm font-medium mb-4">
+            Apa Fitur LungSee?
+          </p>
+
+          <h2 class="text-5xl font-bold text-slate-900 leading-tight mb-12">
+            Teknologi Cerdas untuk Akurasi Diagnosis Paru-Paru
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <div
+                class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center mb-4"
+              >
+                <i class="fa-solid fa-scissors text-violet-500"></i>
+              </div>
+              <h4 class="font-semibold mb-3">YOLOv8 Auto-Cropping</h4>
+              <p class="text-sm text-slate-500">
+                Secara otomatis memotong wilayah rontgen dada dan membuang area
+                non-paru.
+              </p>
+            </div>
+
+            <div>
+              <div
+                class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center mb-4"
+              >
+                <i class="fa-solid fa-mask text-violet-500"></i>
+              </div>
+              <h4 class="font-semibold mb-3">Masked Activation Map</h4>
+              <p class="text-sm text-slate-500">
+                Penguncian topeng digital agar bintik panas Grad-CAM tidak
+                mengalami kebocoran keluar paru.
+              </p>
+            </div>
+
+            <div>
+              <div
+                class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center mb-4"
+              >
+                <i class="fa-solid fa-fire text-violet-500"></i>
+              </div>
+              <h4 class="font-semibold mb-3">Explainable AI Vision</h4>
+              <p class="text-sm text-slate-500">
+                Menampilkan visualisasi langsung letak kerusakan jaringan
+                internal paru-paru secara objektif.
+              </p>
+            </div>
+
+            <div>
+              <div
+                class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center mb-4"
+              >
+                <i class="fa-solid fa-shield-halved text-violet-500"></i>
+              </div>
+              <h4 class="font-semibold mb-3">Out-of-Scope Protection</h4>
+              <p class="text-sm text-slate-500">
+                Sistem pengaman otomatis yang menolak dan memblokir unggahan
+                berkas non-radiografi dada.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <div class="relative w-full max-w-xl">
+            <div
+              class="absolute inset-0 blur-3xl bg-violet-100 rounded-full"
+            ></div>
+            <img
+              src="{{ url_for('static', filename='img/icons/mockup.png') }}"
+              alt="Preview LungSee"
+              class="relative z-10 drop-shadow-2xl hover:scale-105 transition duration-500"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white pt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-4 gap-12 pb-16">
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <img
+              src="{{ url_for('static', filename='img/logo/logo-gisee.png') }}"
+              class="w-20"
+              alt="GISee Logo"
+            />
+          </div>
+          <p class="text-slate-500 leading-relaxed">
+            Platform AI-powered medical imaging yang membantu deteksi penyakit
+            paru secara cepat, akurat, dan transparan menggunakan Explainable
+            AI.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5">Navigasi</h4>
+          <ul class="space-y-3 text-slate-500">
+            <li>
+              <a href="#beranda" class="hover:text-violet-600 transition"
+                >Beranda</a
+              >
+            </li>
+            <li>
+              <a href="#tentang" class="hover:text-violet-600 transition"
+                >Tentang</a
+              >
+            </li>
+            <li>
+              <a href="#edukasi" class="hover:text-violet-600 transition"
+                >Edukasi</a
+              >
+            </li>
+            <li>
+              <a href="#fitur" class="hover:text-violet-600 transition"
+                >Fitur</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5">Produk</h4>
+          <ul class="space-y-3 text-slate-500">
+            <li><a href="{{ url_for('diagnosa') }}">Diagnosa AI</a></li>
+            <li><a href="#fitur">Masked Grad-CAM</a></li>
+            <li><a href="#tentang">YOLOv8 Extraction</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5">Dukungan</h4>
+          <ul class="space-y-3 text-slate-500">
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="border-t border-slate-200 py-8 flex flex-col md:flex-row justify-between items-center"
+      >
+        <p class="text-slate-400 text-sm">
+          © 2026 LungSee. All rights reserved.
+        </p>
+
+        <div class="flex gap-4 mt-4 md:mt-0">
+          <a
+            href="https://www.instagram.com/fidhera/"
+            target="_blank"
+            class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition"
+          >
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/raffael-fidhera-yahya-254336301/"
+            target="_blank"
+            class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition"
+          >
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+
+          <a
+            href="https://github.com/fidhera"
+            target="_blank"
+            class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition"
+          >
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+{% endblock %}
