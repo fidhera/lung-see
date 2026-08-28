@@ -6,3 +6,8 @@ ipynb/
 trash/
 *.pyc
 .DS_Store
+
+static/uploads/*
+!static/uploads/.gitkeep
+static/results/*
+!static/results/.gitkeep
