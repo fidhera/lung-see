@@ -1,6 +1,46 @@
 # Lung-See
 
-Sistem klasifikasi penyakit paru-paru berbasis **Single-Input Computer Vision** yang mengintegrasikan YOLOv8, MobileNetV2, Masked Grad-CAM, dan Flask.
+Sistem klasifikasi penyakit paru-paru berbasis **Single-Input Computer Vision** yang mengintegrasikan YOLOv8 untuk lokalisasi Region of Interest (ROI), MobileNetV2 untuk klasifikasi 3-kelas, Masked Grad-CAM untuk Explainable AI (XAI), dan Flask sebagai antarmuka web interaktif.
+
+---
+
+## Alur Kerja Sistem
+
+```text
+[Input Citra X-Ray]
+       │
+       ▼
+[Lokalisasi ROI Paru (YOLOv8)] ────────> Memotong area paru & mereduksi noise latar belakang
+       │
+       ▼
+[Prapemrosesan (CLAHE & Resize 224x224)]
+       │
+       ▼
+[Klasifikasi Penyakit (MobileNetV2)] ───> Prediksi: NORMAL / PNEUMONIA / TBC
+       │
+       ▼
+[Komputasi Masked Grad-CAM] ────────────> Ekstraksi gradien layer konvolusi & segmentasi atensi
+       │
+       ▼
+[Sistem Barrier Handling] ──────────────> Evaluasi ambang batas keyakinan (Valid / Ambigu / Tolak)
+       │
+       ▼
+[Penyajian Antarmuka Flask] ────────────> Menampilkan hasil diagnosa, persentase keyakinan, & heatmap
+```
+
+## Tech Stack
+
+| Komponen | Teknologi |
+|---|---|
+| Bahasa Pemrograman | Python 3.10.x |
+| Lokalisasi ROI | Ultralytics YOLOv8 |
+| Klasifikasi | MobileNetV2 |
+| Explainable AI | Masked Grad-CAM |
+| Image Processing | OpenCV & NumPy |
+| Web Framework | Flask |
+| Template Engine | Jinja2 |
+| Frontend | HTML, CSS, JavaScript |
+| Model Klasifikasi | TensorFlow / Keras |
 
 ## Fitur Utama
 
@@ -23,7 +63,7 @@ lung-see/
 ├── run_demo.py                # Script pembantu eksekusi demo lokal
 ├── requirements.txt           # Daftar pustaka dan dependensi Python
 ├── runtime.txt                # Konfigurasi versi runtime Python
-├── Procfile                   # Konfigurasi deployment peladen
+├── Procfile                  # Konfigurasi deployment peladen
 ├── yolov8n.pt                 # Bobot model lokalisasi ROI YOLOv8
 │
 ├── model/
@@ -45,7 +85,7 @@ lung-see/
     ├── result.html            # Halaman penyajian hasil analisis
     ├── pneumonia.html         # Halaman edukasi Pneumonia
     ├── tbc.html               # Halaman edukasi Tuberculosis
-    ├── covid.html              # Halaman edukasi Covid-19
+    ├── covid.html             # Halaman edukasi Covid-19
     └── tentang_kami.html      # Halaman profil pengembang sistem
 ```
 
@@ -53,9 +93,9 @@ lung-see/
 
 Pastikan perangkat berikut telah terpasang:
 
-- Python 3.10.x (disarankan Python 3.10.12)
-- Git
-- Peramban web modern seperti Google Chrome, Mozilla Firefox, atau Microsoft Edge
+- **Python 3.10.x** (disarankan Python 3.10.12)
+- **Git**
+- Peramban web modern (Google Chrome, Mozilla Firefox, atau Microsoft Edge)
 
 ## Panduan Instalasi dan Menjalankan Program
 
@@ -84,7 +124,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
 **Windows (Command Prompt):**
 
-```cmd
+```bat
 python -m venv venv
 .\venv\Scripts\activate.bat
 ```
@@ -113,7 +153,7 @@ Eksekusi file aplikasi utama Flask:
 python app.py
 ```
 
-Setelah server lokal aktif, terminal akan menampilkan informasi berikut:
+Setelah server lokal aktif, terminal akan menampilkan log pemuatan model dan alamat server:
 
 ```text
 Memuat Modul Lokalisasi YOLOv8...
@@ -125,7 +165,7 @@ Seluruh Modul AI PI-V04 Berhasil Dimuat.
 
 ### 5. Mengakses Antarmuka Sistem
 
-Buka peramban dan masuk ke:
+Buka peramban dan akses:
 
 ```text
 http://127.0.0.1:8080
@@ -137,9 +177,21 @@ atau:
 http://localhost:8080
 ```
 
+### 6. Jika Port 8080 Bentrok
+
+Jika port `8080` sedang digunakan oleh aplikasi lain, hentikan proses yang menggunakan port tersebut atau ubah konfigurasi port pada aplikasi Flask sesuai kebutuhan.
+
+Contoh menjalankan aplikasi pada port lain jika `app.py` mendukung konfigurasi port melalui parameter atau variabel yang sesuai:
+
+```bash
+python app.py
+```
+
+Jika port ditentukan langsung di dalam `app.py`, ubah nilai port `8080` menjadi port lain yang tersedia, misalnya `5000`, kemudian jalankan kembali aplikasi.
+
 ## Mekanisme Pengaman dan Ambang Batas Evaluasi
 
-Sistem menerapkan aturan penanganan `confidence score` secara ketat untuk menjaga integritas hasil inferensi.
+Sistem menerapkan aturan penanganan keyakinan (*confidence score*) secara ketat untuk menjaga integritas hasil inferensi.
 
 | Rentang Confidence | Status Validasi | Tindakan Sistem |
 |---|---|---|
